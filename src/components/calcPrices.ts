@@ -47,7 +47,7 @@ const setRealPrice = params => {
         log('---- realPriceEl', realPriceEl);
     } else {
         const parentId = priceEl.closest(PARAMS.PRODUCT_SELECTOR)?.id;
-        const newPriceEl = cn('div', { class: realPriceClassName, 'data-parent-id': parentId }, [newPriceFormatted]);
+        const newPriceEl = cn('span', { class: realPriceClassName, 'data-parent-id': parentId }, [newPriceFormatted]);
         log('---- newPriceEl', newPriceEl);
         priceEl.append(newPriceEl);
     }
