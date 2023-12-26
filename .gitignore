@@ -1,0 +1,7 @@
+.idea
+.parcel-cache
+.vscode
+.DS_Store
+.scannerwork
+node_modules
+yarn-error.log
