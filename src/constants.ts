@@ -3,7 +3,7 @@ export enum PageType {
     'CHECKOUT' = 'CHECKOUT', // Корзина. Оформление
     'COMMON' = 'COMMON', // Страница каталога и все остальные
     'PRODUCT' = 'PRODUCT', // Страница с товаром
-    'FAVORITES' = 'FAVORITES', // Страница с товаром
+    'FAVORITES' = 'FAVORITES', // Избранное
 }
 
 export const urlPathByPage = {
