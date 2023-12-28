@@ -2,13 +2,13 @@
 // ==UserScript==
 // @name         Megamarket Real Price
 // @description  Выводит цены с учетом бонусов и добавляет сортировку по ним
-// @version      2.0.1
+// @version      2.0.2
 // @author       undfndusr
 // @license      MIT
 // @match        *://*.megamarket.ru/*
 // @namespace    http://tampermonkey.net/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=megamarket.ru
-// @homepageURL  https://greasyfork.org/ru/scripts/474940-megamarket-real-price
+// @homepageURL  https://greasyfork.org/ru/scripts/483156-megamarket-real-price
 // @run-at       document-end
 // @grant        GM_setValue
 // @grant        GM_getValue
