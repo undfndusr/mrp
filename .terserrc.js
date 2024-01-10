@@ -12,8 +12,8 @@ const preamble = `
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=megamarket.ru
 // @homepageURL  https://greasyfork.org/ru/scripts/483156-megamarket-real-price
 // @run-at       document-end
-// @grant        GM_setValue
-// @grant        GM_getValue
+// @grant        GM.setValue
+// @grant        GM.getValue
 // ==/UserScript==
 `;
 

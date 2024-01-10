@@ -1,7 +1,7 @@
 {
     "name": "mrp",
     "description": "megamarket real price",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "license": "MIT",
     "author": "undfndusr",
     "source": "src/index.ts",
