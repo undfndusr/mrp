@@ -2,6 +2,7 @@ import { observeUrlChange } from './components/urlObserver';
 import { injectStyles } from './components/stylesInjector';
 import { router } from './components/router';
 import { PARAMS } from './constants';
+import pkg from '../package.json';
 
 const observeVisibilityChange = (onChange: () => void) => {
     document.onvisibilitychange = () => {
@@ -12,7 +13,7 @@ const observeVisibilityChange = (onChange: () => void) => {
 };
 
 const init = () => {
-    console.log('MRP init');
+    console.log(`MRP v${pkg.version} init`);
 
     injectStyles();
 
