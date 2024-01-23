@@ -2,6 +2,8 @@
     "compilerOptions": {
         "target": "es5",
         "lib": ["ES5", "DOM", "ES2020"],
-        "noImplicitAny": false
+        "noImplicitAny": false,
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     }
 }

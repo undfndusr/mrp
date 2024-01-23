@@ -11,7 +11,6 @@ type ConstructorArgs = {
 };
 
 export class Page {
-    private _isFirstRun = true;
     private _pageType: PageType;
     private _pageReadyElementSelector: string;
 
@@ -28,14 +27,10 @@ export class Page {
     public run = async () => {
         try {
             console.log(`${this._pageType} page init`);
-            console.log('isFirstRun', this._isFirstRun);
 
             await getDomElementAsync(this._pageReadyElementSelector);
 
-            if (this._isFirstRun) {
-                this._isFirstRun = false;
-                this.onPreparePage?.();
-            }
+            await this.onPreparePage?.();
 
             await this.onRun();
         } catch (e) {

@@ -54,6 +54,7 @@ const onCatalogChange = async (): Promise<void> => {
 const preparePage = async (): Promise<void> => {
     const catalogWrapper = document.querySelector(PARAMS.CATALOG_WRAPPER_SELECTOR);
     const catalogFilter = document.querySelector(PARAMS.CATALOG_FILTER_SELECTOR);
+    const mrpToolbar = document.querySelector(PARAMS.MRP_TOOLBAR_CLASSNAME);
 
     // Следим за изменениями в каталоге
     if (catalogWrapper) {
@@ -61,7 +62,7 @@ const preparePage = async (): Promise<void> => {
     }
 
     // Добавляем наш тулбар на страницу
-    if (catalogFilter) {
+    if (catalogFilter && !mrpToolbar) {
         injectToolbar();
         fillToolbar();
     }
