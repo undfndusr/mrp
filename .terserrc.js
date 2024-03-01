@@ -19,6 +19,7 @@ const preamble = `
 
 // https://github.com/parcel-bundler/parcel/pull/2666#issuecomment-563054225
 module.exports = {
+    compress: false,
     output: {
         preamble,
     },
