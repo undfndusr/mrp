@@ -5,7 +5,7 @@
     "license": "MIT",
     "author": "undfndusr",
     "source": "src/index.ts",
-    "main": "build/index.js",
+    "main": "build/mrp.user.js",
     "targets": {
         "main": {
             "sourceMap": false,

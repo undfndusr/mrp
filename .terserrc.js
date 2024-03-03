@@ -15,7 +15,7 @@ const preamble = `
 // @grant        GM.setValue
 // @grant        GM.getValue
 // ==/UserScript==
-`;
+`.slice(1);
 
 // https://github.com/parcel-bundler/parcel/pull/2666#issuecomment-563054225
 module.exports = {
