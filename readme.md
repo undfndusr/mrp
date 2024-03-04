@@ -9,7 +9,7 @@
     - Violentmonkey: [Chrome](https://chromewebstore.google.com/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag) | [Mozilla](https://addons.mozilla.org/ru/firefox/addon/violentmonkey/)
     - Greasemonkey: [Mozilla](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/)
     - Userscripts: [Safari](https://github.com/quoid/userscripts)
-2. Откройте страницу скрипта - [greasyfork.org](https://greasyfork.org/ru/scripts/483156-megamarket-real-price)
+2. Откройте страницу скрипта - [mrp.user.js](https://github.com/undfndusr/mrp/raw/master/build/mrp.user.js)
 3. Установите скрипт (в случае Сафари следуйте инструкции, приведенной на странице расширения Userscripts)
 
 ## Использование
