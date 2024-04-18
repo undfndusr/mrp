@@ -1,13 +1,12 @@
 // ==UserScript==
 // @name         Megamarket Real Price
 // @description  Выводит цены с учетом бонусов и добавляет сортировку по ним
-// @version      2.0.6
+// @version      2.0.7
 // @author       undfndusr
 // @license      MIT
 // @match        *://*.megamarket.ru/*
 // @namespace    http://tampermonkey.net/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=megamarket.ru
-// @homepageURL  https://greasyfork.org/ru/scripts/483156-megamarket-real-price
 // @run-at       document-end
 // @grant        GM.setValue
 // @grant        GM.getValue
@@ -60,7 +59,11 @@ const n = [
         priceSelector: '.goods-item-card__amount',
         bonusSelector: '.bonus-amount',
     },
-    { wrapperSelector: '.item-money', priceSelector: '.item-price', bonusSelector: '.bonus-amount' },
+    {
+        wrapperSelector: '.catalog-item-regular-desktop__price-block',
+        priceSelector: '.catalog-item-regular-desktop__price',
+        bonusSelector: '.bonus-amount',
+    },
     {
         wrapperSelector: '.multicart-item__summary',
         priceSelector: '.cart-summary-redesign__total-price-value',
@@ -103,7 +106,7 @@ const s = e => {
     };
 };
 const i = e => {
-    return +e.replace(/[^0-9.-]+/g, '');
+    return e ? +e.replace(/[^0-9.-]+/g, '') : 0;
 };
 const l = e => {
     return new Promise(t => setTimeout(() => t(), e));
@@ -151,9 +154,9 @@ const E = () => {
     document.head.insertAdjacentHTML('beforeend', `<style type="text/css" id="mrpStyles">${m}</style>`);
 };
 const S = false;
-const T = (0, s)(S);
-const h = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 });
-const R = e => {
+const g = (0, s)(S);
+const T = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 });
+const h = e => {
     const {
         wrapperEl: t,
         priceSelector: o = '.item-price',
@@ -161,57 +164,57 @@ const R = e => {
         realPriceClassName: c,
     } = e;
     S;
-    T('---- wrapperEl', t);
+    g('---- wrapperEl', t);
     const a = t.querySelector(o);
     const s = t.querySelector(n);
     const l = t.querySelector(`.${c}`);
-    T('---- priceEl', o, a);
-    T('---- bonusEl', n, s);
-    T('---- realPriceEl', l);
+    g('---- priceEl', o, a);
+    g('---- bonusEl', n, s);
+    g('---- realPriceEl', l);
     if (!a || !s) {
-        T('setRealPrice cancel');
+        g('setRealPrice cancel');
         S;
         return;
     }
     const p = (0, i)(a.firstChild.textContent.trim());
     const d = (0, i)(s.firstChild.textContent.trim());
-    T('---- priceValue', p);
-    T('---- bonusValue', d);
+    g('---- priceValue', p);
+    g('---- bonusValue', d);
     const m = +p - +d;
-    T('---- newPriceValue', m);
-    const E = ` (${h.format(m)})`;
-    T('---- newPriceFormatted', E);
+    g('---- newPriceValue', m);
+    const E = ` (${T.format(m)})`;
+    g('---- newPriceFormatted', E);
     if (l) {
         l.textContent = E;
-        T('---- realPriceEl', l);
+        g('---- realPriceEl', l);
     } else {
         const e = a.closest((0, r).PRODUCT_SELECTOR)?.id;
         const t = (0, u)('span', { class: c, 'data-parent-id': e }, [E]);
-        T('---- newPriceEl', t);
+        g('---- newPriceEl', t);
         a.append(t);
     }
-    T('setRealPrice end');
+    g('setRealPrice end');
     S;
 };
-const g = async () => {
+const R = async () => {
     S;
     (0, n).forEach(({ wrapperSelector: e, priceSelector: t, bonusSelector: o }) => {
         const n = document.querySelectorAll(e);
         S;
         n.forEach(e => {
-            R({ wrapperEl: e, priceSelector: t, bonusSelector: o, realPriceClassName: (0, r).REAL_PRICE_CLASSNAME });
+            h({ wrapperEl: e, priceSelector: t, bonusSelector: o, realPriceClassName: (0, r).REAL_PRICE_CLASSNAME });
         });
     });
     S;
 };
 const f = async () => {
-    await g();
+    await R();
 };
 class y {
     constructor({ pageType: e, pageReadyElementSelector: t, onPreparePage: o, onRun: r }) {
         this.run = async () => {
             try {
-                await (0, a)(this._pageReadyElementSelector);
+                const e = await (0, a)(this._pageReadyElementSelector);
                 await this.onPreparePage?.();
                 await this.onRun();
             } catch (e) {}
@@ -222,7 +225,7 @@ class y {
         this.onRun = r;
     }
 }
-const C = async () => {
+const b = async () => {
     const e = document.querySelector((0, r).BASKET_TOTAL_PRICE_SELECTOR);
     const t = new MutationObserver(([e]) => {
         const t = e.target.textContent.trim();
@@ -236,10 +239,10 @@ const C = async () => {
         characterDataOldValue: true,
     });
 };
-const b = async () => {
+const C = async () => {
     (0, f)();
 };
-const _ = new (0, y)({ pageType: (0, e).BASKET, pageReadyElementSelector: (0, o).BASKET, onPreparePage: C, onRun: b });
+const _ = new (0, y)({ pageType: (0, e).BASKET, pageReadyElementSelector: (0, o).BASKET, onPreparePage: b, onRun: C });
 const O = false;
 const A = (0, s)(O);
 const w = e => {
@@ -295,6 +298,7 @@ const G = async (e, t) => {
             U(t);
         });
         o.observe(e, { childList: true, subtree: true });
+        return o;
     } catch (e) {}
 };
 const I = ({ text: e, attrs: t, icon: o, onClick: r }) => {
@@ -317,12 +321,13 @@ const V = ({ text: e, attrs: t, checked: o, onChange: r }) => {
     if (r) c.addEventListener('change', r);
     return i;
 };
-const D = () => {
+let D = null;
+const q = () => {
     const e = document.querySelector((0, r).CATALOG_FILTER_SELECTOR);
     const t = (0, u)('div', { class: (0, r).MRP_TOOLBAR_CLASSNAME }, []);
     e.before(t);
 };
-const q = async () => {
+const F = async () => {
     try {
         const e = document.querySelector(`.${(0, r).MRP_TOOLBAR_CLASSNAME}`);
         const t = await GM.getValue((0, r).SORT_TOGGLE_KEY);
@@ -347,104 +352,98 @@ const q = async () => {
         e.append(o, n, c);
     } catch (e) {}
 };
-const F = async () => {
+const B = async () => {
     await (0, f)();
     await (0, v)();
 };
-const B = async () => {
+const H = async () => {
     const e = document.querySelector((0, r).CATALOG_WRAPPER_SELECTOR);
     const t = document.querySelector((0, r).CATALOG_FILTER_SELECTOR);
     const o = document.querySelector(`.${(0, r).MRP_TOOLBAR_CLASSNAME}`);
-    if (e) (0, G)(e, F);
+    if (e && !D) D = (0, G)(e, B);
     if (t && !o) {
-        D();
         q();
+        F();
     }
 };
-const H = async () => {
+const Y = async () => {
     try {
         const e = document.querySelector((0, r).CATALOG_WRAPPER_SELECTOR);
         await (0, f)();
         if (e) await (0, v)();
     } catch (e) {}
 };
-const Y = new (0, y)({ pageType: (0, e).COMMON, pageReadyElementSelector: (0, o).COMMON, onPreparePage: B, onRun: H });
-const j = (0, p)((0, f), 300);
-const z = async () => {
+const j = new (0, y)({ pageType: (0, e).COMMON, pageReadyElementSelector: (0, o).COMMON, onPreparePage: H, onRun: Y });
+const z = (0, p)((0, f), 300);
+const W = async () => {
     const e = document.querySelector((0, o).CHECKOUT);
-    const t = new MutationObserver(j);
+    const t = new MutationObserver(z);
     t.observe(e, { childList: true, subtree: true });
 };
-const W = async () => {
+const $ = async () => {
     (0, f)();
 };
-const $ = new (0, y)({
+const Z = new (0, y)({
     pageType: (0, e).CHECKOUT,
     pageReadyElementSelector: (0, o).CHECKOUT,
-    onPreparePage: z,
-    onRun: W,
+    onPreparePage: W,
+    onRun: $,
 });
-const Z = async () => {
+let J = null;
+const Q = async () => {
     const e = document.querySelector((0, r).FAVORITES_CATALOG_WRAPPER_SELECTOR);
-    if (e) (0, G)(e, (0, f));
+    if (e && !J) J = (0, G)(e, (0, f));
 };
-const J = async () => {
+const X = async () => {
     (0, f)();
 };
-const Q = new (0, y)({
+const ee = new (0, y)({
     pageType: (0, e).FAVORITES,
     pageReadyElementSelector: (0, o).FAVORITES,
-    onPreparePage: Z,
-    onRun: J,
+    onPreparePage: Q,
+    onRun: X,
 });
-const X = (0, p)((0, f), 300);
-const ee = async () => {
+const et = (0, p)((0, f), 300);
+const eo = async () => {
     const e = document.querySelector((0, r).PRODUCT_OFFERS_SECTIONS);
     if (!e) return;
-    const t = new MutationObserver(X);
+    const t = new MutationObserver(et);
     t.observe(e, { childList: true, subtree: true });
 };
-const et = async () => {
+const er = async () => {
     (0, f)();
 };
-const eo = new (0, y)({
+const en = new (0, y)({
     pageType: (0, e).PRODUCT,
     pageReadyElementSelector: (0, o).PRODUCT,
-    onPreparePage: ee,
-    onRun: et,
+    onPreparePage: eo,
+    onRun: er,
 });
-const er = async () => {
-    if ((0, c)((0, e).PRODUCT)) {
-        (0, eo).run();
-        return;
-    }
-    if ((0, c)((0, e).CHECKOUT)) {
-        (0, $).run();
-        return;
-    }
-    if ((0, c)((0, e).BASKET)) {
-        (0, _).run();
-        return;
-    }
-    if ((0, c)((0, e).FAVORITES)) {
-        (0, Q).run();
-        return;
-    }
-    (0, Y).run();
+const ec = [(0, en)];
+const ea = () => {
+    if ((0, c)((0, e).PRODUCT)) return 0, en;
+    if ((0, c)((0, e).CHECKOUT)) return 0, Z;
+    if ((0, c)((0, e).BASKET)) return 0, _;
+    if ((0, c)((0, e).FAVORITES)) return 0, ee;
+    return 0, j;
 };
-const en = e => {
+const es = async () => {
+    const e = ea();
+    e.run();
+};
+const ei = e => {
     document.onvisibilitychange = () => {
         if (document.visibilityState === 'visible') e();
     };
 };
-const ec = () => {
+const el = () => {
     (0, E)();
-    (0, er)();
-    (0, d)((0, er));
-    en((0, er));
+    (0, es)();
+    (0, d)((0, es));
+    ei((0, es));
 };
 try {
     window.onload = () => {
-        setTimeout(ec, (0, r).INIT_DELAY);
+        setTimeout(el, (0, r).INIT_DELAY);
     };
 } catch (e) {}
