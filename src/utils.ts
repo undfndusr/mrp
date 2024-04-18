@@ -42,7 +42,7 @@ export const createLogger = (isEnabled: boolean) => {
 };
 
 export const digitsOnly = (cur: string): number => {
-    return +cur.replace(/[^0-9.-]+/g, '');
+    return cur ? +cur.replace(/[^0-9.-]+/g, '') : 0;
 };
 
 export const sleep = (time: number): Promise<void> => {
