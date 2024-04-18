@@ -66,8 +66,8 @@ export const sectionsWithPriceElements = [
     },
     // Страница каталога. Цены товаров
     {
-        wrapperSelector: '.item-money',
-        priceSelector: '.item-price',
+        wrapperSelector: '.catalog-item-regular-desktop__price-block',
+        priceSelector: '.catalog-item-regular-desktop__price',
         bonusSelector: '.bonus-amount',
     },
     // Корзина. Финальная цена
